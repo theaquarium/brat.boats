@@ -141,7 +141,7 @@ function draw(t) {
 
 requestAnimationFrame(draw);
 
-const ocean = new Audio('/assets/ocean.mp3');
+const ocean = new Audio('/songs/ocean.mp3');
 ocean.addEventListener(
     'ended',
     function () {
