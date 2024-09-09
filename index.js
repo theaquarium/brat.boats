@@ -134,7 +134,7 @@ function draw(t) {
         addBoat();
     }
 
-    drawWithAnim(wave3, 5, 157, 35);
+    drawWithAnim(wave3, 5, 157, 59);
 
     lastT = t;
 }
