@@ -38,7 +38,7 @@ function addBoat() {
         x: -1 * size,
         y: randomIntFromInterval(90, 120),
         size: size,
-        speed: randomIntFromInterval(1, 5),
+        speed: randomIntFromInterval(1.5, 4),
     });
 
     boats.sort((a, b) => a.y + a.size - (b.y + b.size));
@@ -121,14 +121,14 @@ function draw(t) {
 
         if (boat.x > canvas.width + 2 * boat.size) {
             a.splice(index, 1);
-            addBoat();
+            // addBoat();
         }
     });
 
     if (
         enableBoat &&
         boats.length < 3 &&
-        boats.every((boat) => boat.x > canvas.width / 3) &&
+        boats.every((boat) => boat.x > canvas.width / 4) &&
         Math.random() > 0.9
     ) {
         addBoat();

@@ -37,6 +37,7 @@ body {
     transform: rotate(-3deg);
     cursor: pointer;
     box-shadow: 4px 3px 3px #0005;
+    text-align: center;
 }
 
 #poem {
