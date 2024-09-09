@@ -14,8 +14,33 @@ body {
 #notice {
     position: absolute;
     left: 50%;
-    top: 20px;
+    bottom: 20px;
     transform: translate(-50%, 0);
     color: white;
     font-family: Arial, Helvetica, sans-serif;
+    font-size: 3vh;
+}
+
+#raft-notes {
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
+    top: 66%;
+}
+#start {
+    font-family: Arial, Helvetica, sans-serif;
+    border: none;
+    background: #fff;
+    outline: none;
+    padding: 1vh;
+    font-size: 3vh;
+    transform: rotate(-3deg);
+    cursor: pointer;
+    box-shadow: 4px 3px 3px #0005;
+}
+
+#poem {
+    width: 20vh;
+    padding: 1vh;
+    background: #fff;
 }
