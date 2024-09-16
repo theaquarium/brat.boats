@@ -1,2 +1,4 @@
 *.afphoto~lock~
 .DS_Store
+.RData
+.Rhistory
