@@ -236,9 +236,11 @@ const jumpBoat = () => {
 document.body.addEventListener('keydown', (e) => {
     if (e.code === 'KeyE') {
         window.location.href = '/elon';
-    }
-
-    if (e.code !== 'Space') {
+        return;
+    } else if (e.code === 'KeyU') {
+        window.location.href = 'https://www.youtube.com/watch?v=RbzcLzMPyIg';
+        return;
+    } else if (e.code !== 'Space') {
         return;
     }
 
