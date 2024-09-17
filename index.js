@@ -19,7 +19,9 @@ const wave3 = new Image();
 wave3.src = '/assets/wave3.webp';
 
 const bratBoat = new Image();
-bratBoat.src = '/assets/bratboatfloat.webp';
+bratBoat.src = '/assets/bratboat.webp';
+const bratBoatFloat = new Image();
+bratBoatFloat.src = '/assets/bratboatfloat.webp';
 
 const raft = new Image();
 raft.src = '/assets/raft.webp';
@@ -39,6 +41,8 @@ function addBoat() {
         y: randomIntFromInterval(90, 120),
         size: size,
         speed: randomIntFromInterval(1.5, 4),
+        jumping: false,
+        jumpStart: 0,
     });
 
     boats.sort((a, b) => a.y + a.size - (b.y + b.size));
@@ -115,7 +119,28 @@ function draw(t) {
     }
 
     boats.forEach((boat, index, a) => {
-        ctx.drawImage(bratBoat, boat.x, boat.y, boat.size, boat.size);
+        let yLevel = boat.y;
+        if (boat.jumping) {
+            if (boat.jumpStart < 0) {
+                boat.jumpStart = t;
+            }
+
+            const jumpPercent = (t - boat.jumpStart) / 800;
+
+            if (jumpPercent > 1) {
+                boats[index].jumping = false;
+            } else {
+                yLevel -= 0.8 * boat.size * Math.sin(jumpPercent * Math.PI);
+            }
+        }
+
+        ctx.drawImage(
+            boat.jumping ? bratBoat : bratBoatFloat,
+            boat.x,
+            yLevel,
+            boat.size,
+            boat.size,
+        );
 
         boat.x += (t - lastT) * 0.01 * boat.speed;
 
@@ -177,13 +202,48 @@ bratAudio.addEventListener(
     false,
 );
 
-document.querySelector('#start').addEventListener('click', () => {
+document.querySelector('#start').addEventListener('click', (e) => {
+    e.stopPropagation();
+
     enableBoat = true;
     document.querySelector('#notice').style.display = 'none';
     document.querySelector('#raft-notes').style.display = 'none';
+    document.querySelector('#notice-space').style.display = 'block';
 
     addBoat();
 
     ocean.play();
     bratAudio.play();
 });
+
+const jumpBoat = () => {
+    document.querySelector('#notice-space').style.display = 'none';
+
+    if (boats.length === 0) return;
+
+    let index = Math.floor(Math.random() * boats.length);
+    while (boats[index].x >= canvas.width || boats[index].jumping) {
+        if (boats.every((b) => b.jumping || b.x >= canvas.width)) {
+            return;
+        }
+        index = Math.floor(Math.random() * boats.length);
+    }
+
+    boats[index].jumping = true;
+    boats[index].jumpStart = -1;
+};
+
+document.body.addEventListener('keydown', (e) => {
+    if (e.code === 'KeyE') {
+        window.location.href = '/elon';
+    }
+
+    if (e.code !== 'Space') {
+        return;
+    }
+
+    jumpBoat();
+});
+
+window.addEventListener('click', jumpBoat);
+window.addEventListener('touchstart', jumpBoat);
